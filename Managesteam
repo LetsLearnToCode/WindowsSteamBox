@@ -4,5 +4,5 @@
 $i = 0
 do 
 {
-Start-Process -Wait -FilePath ${env:ProgramFiles(x86)}\Steam\Steam.exe -ArgumentList "-bigpicture"
+Start-Process -Wait ${env:ProgramFiles(x86)}\Steam\Steam.exe -argument "-BigPicture"
 } Until ($i -eq 1)
