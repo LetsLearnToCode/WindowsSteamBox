@@ -37,3 +37,39 @@ $currentPath=Split-Path ((Get-Variable MyInvocation -Scope 0).Value).MyCommand.P
 $Date =  Get-Date
 $WriteToFile = "Ran correctly at: " + $Date
 $WriteToFile | Out-File $currentPath\ran.txt
+
+#Run Windows Updates
+Get-WindowsUpdate
+
+
+
+
+
+
+
+
+
+
+
+
+#*****************BEING FUNCTIONS*******************#
+
+#Run Windows Updates function
+Function Get-WindowsUpdate {
+ 
+    [Cmdletbinding()]
+    Param()
+ 
+    Process {
+        try {
+            Write-Verbose "Getting Windows Update"
+            $Session = New-Object -ComObject Microsoft.Update.Session            
+            $Searcher = $Session.CreateUpdateSearcher()            
+            $Criteria = "IsInstalled=0 and DeploymentAction='Installation' or IsPresent=1 and DeploymentAction='Uninstallation' or IsInstalled=1 and DeploymentAction='Installation' and RebootRequired=1 or IsInstalled=0 and DeploymentAction='Uninstallation' and RebootRequired=1"           
+            $SearchResult = $Searcher.Search($Criteria)           
+            $SearchResult.Updates | Out-File $currentPath\CurrentWindowsUpdates.txt
+        } catch {
+            Write-Warning -Message "Failed to query Windows Update because $($_.Exception.Message)" | Out-File $currentPath\ERROR.txt
+        }
+    }
+}
