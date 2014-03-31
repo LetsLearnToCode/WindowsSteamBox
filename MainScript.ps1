@@ -3,7 +3,7 @@
 
 #Check to make sure Steam is installed
 #Loop check
-
+$currentPath=Split-Path ((Get-Variable MyInvocation -Scope 0).Value).MyCommand.Path
 
 #*****************BEING FUNCTIONS*******************#
 
@@ -53,12 +53,12 @@ do{
 } Until ($i -eq 1)
 
 #Steam Exitsts! Lets start steam
-Start-Process Powershell -ArgumentList "-file $currentPath\Managesteam.ps1"
+Start-Process powershell -Argument "$currentpath\Managesteam.ps1"
 
 
 #Now that we have steam running, lets get to work on the background stuff
 #Initiate Variables
-$currentPath=Split-Path ((Get-Variable MyInvocation -Scope 0).Value).MyCommand.Path
+
 
 #Wirte to file that steam ran and script worked
 $Date =  Get-Date
