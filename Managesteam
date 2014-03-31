@@ -1,0 +1,8 @@
+#This script will manage Steam
+
+
+$i = 0
+do 
+{
+Start-Process -Wait -FilePath ${env:ProgramFiles(x86)}\Steam\Steam.exe -ArgumentList "-bigpicture"
+} Until ($i -eq 1)
