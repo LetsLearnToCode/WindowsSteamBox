@@ -6,7 +6,7 @@
 $i = 0
 do{
     [boolean]$SteamFileExists = test-path ${env:ProgramFiles(x86)}\Steam\Steam.exe
-    if ($SteamFileExists -ne $True){
+    if ($SteamFileExists -eq $True){
             $i = 1
         }
         Else
@@ -28,3 +28,12 @@ do{
 #Steam Exitsts! Lets start steam
 Start-Process -FilePath ${env:ProgramFiles(x86)}\Steam\Steam.exe
 
+
+#Now that we have steam running, lets get to work on the background stuff
+#Initiate Variables
+$currentPath=Split-Path ((Get-Variable MyInvocation -Scope 0).Value).MyCommand.Path
+
+#Wirte to file that steam ran and script worked
+$Date =  Get-Date
+$WriteToFile = "Ran correctly at: " + $Date
+$WriteToFile | Out-File $currentPath\ran.txt
